@@ -1,1 +1,139 @@
+Stack:
+
+#include <stdio.h>
+#include <stdlib.h>
+
+#define MAX 5  
+
+struct Stack {
+    int arr[MAX];
+    int top;
+};
+
+void initStack(struct Stack* stack) {
+    stack->top = -1;
+}
+
+int isFull(struct Stack* stack) {
+    return stack->top == MAX - 1;
+}
+
+int isEmpty(struct Stack* stack) {
+    return stack->top == -1;
+}
+
+void push(struct Stack* stack, int value) {
+    if (isFull(stack)) {
+        printf("Stack Overflow\n");
+    } else {
+        stack->arr[++(stack->top)] = value;
+        printf("%d pushed onto stack\n", value);
+    }
+}
+
+int pop(struct Stack* stack) {
+    if (isEmpty(stack)) {
+        printf("Stack Underflow\n");
+        return -1;
+    } else {
+        return stack->arr[(stack->top)--];
+    }
+}
+
+int peek(struct Stack* stack) {
+    if (isEmpty(stack)) {
+        printf("Stack is empty\n");
+        return -1;
+    }
+    return stack->arr[stack->top];
+}
+
+int main() {
+    struct Stack stack;
+    initStack(&stack);
+
+    push(&stack, 10);
+    push(&stack, 20);
+    push(&stack, 30);
+
+    printf("%d popped from stack\n", pop(&stack));
+    printf("Top element is %d\n", peek(&stack));
+
+    return 0;
+}
+
+Queue:
+
+#include <stdio.h>
+#include <stdlib.h>
+
+#define MAX 5  // 
+
+struct Queue {
+    int arr[MAX];
+    int front;
+    int rear;
+};
+
+void initQueue(struct Queue* queue) {
+    queue->front = -1;
+    queue->rear = -1;
+}
+
+int isFull(struct Queue* queue) {
+    return queue->rear == MAX - 1;
+}
+
+int isEmpty(struct Queue* queue) {
+    return queue->front == -1;
+}
+
+void enqueue(struct Queue* queue, int value) {
+    if (isFull(queue)) {
+        printf("Queue Overflow\n");
+    } else {
+        if (queue->front == -1) {
+            queue->front = 0;
+        }
+        queue->arr[++(queue->rear)] = value;
+        printf("%d enqueued to queue\n", value);
+    }
+}
+
+int dequeue(struct Queue* queue) {
+    if (isEmpty(queue)) {
+        printf("Queue Underflow\n");
+        return -1;
+    } else {
+        int value = queue->arr[queue->front];
+        if (queue->front == queue->rear) {
+            queue->front = queue->rear = -1; 
+        } else {
+            queue->front++;
+        }
+        return value;
+    }
+}
+
+int front(struct Queue* queue) {
+    if (isEmpty(queue)) {
+        printf("Queue is empty\n");
+        return -1;
+    }
+    return queue->arr[queue->front];
+}
+
+int main() {
+    struct Queue queue;
+    initQueue(&queue);
+
+    enqueue(&queue, 10);
+    enqueue(&queue, 20);
+    enqueue(&queue, 30);
+
+    printf("%d dequeued from queue\n", dequeue(&queue));
+    printf("Front element is %d\n", front(&queue));
+
+    return 0;
+}
 
